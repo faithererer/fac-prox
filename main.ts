@@ -4,7 +4,7 @@ import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 // --- 配置 ---
 
 // 2. 定义代理服务器监听的端口
-const PROXY_PORT = parseInt(Deno.env.get("PROXY_PORT") || "8000");
+// const PROXY_PORT = parseInt(Deno.env.get("PROXY_PORT") || "8000");
 
 // 3. 定义要将请求转发到的目标服务 URL
 const ANTHROPIC_TARGET_URL = Deno.env.get("ANTHROPIC_TARGET_URL") || "https://app.factory.ai/api/llm/a/v1/messages";
@@ -245,14 +245,13 @@ async function handleOpenAIRequest(req: Request, requestUrl: URL): Promise<Respo
 }
 
 // --- 启动服务器 ---
-
-console.log(`🚀 代理服务器已启动，监听于 http://localhost:${PROXY_PORT}`);
-console.log(`➡️  Anthropic 请求转发到: ${ANTHROPIC_TARGET_URL}`);
-console.log(`➡️  OpenAI 请求转发到: ${OPENAI_TARGET_URL}`);
-console.log(`➡️  Bedrock 请求转发到: ${BEDROCK_TARGET_URL}`);
+console.log(`🚀 代理服务器已启动，准备接收请求...`); // 修改日志，因为我们不知道具体端口
+console.log(`➡️  Anthropic 请求将转发到: ${ANTHROPIC_TARGET_URL}`);
+console.log(`➡️  OpenAI 请求将转发到: ${OPENAI_TARGET_URL}`);
+console.log(`➡️  Bedrock 请求将转发到: ${BEDROCK_TARGET_URL}`);
 console.log(`📍 使用方法:`);
 console.log(`   - /anthropic/* -> 需要 x-api-key 头 (转换为 Bearer Token)`);
 console.log(`   - /openai/* -> 需要 Authorization: Bearer <token> 头 (直接透传)`);
 console.log(`   - /bedrock/* -> 需要 x-api-key 头 (转换为 Bearer Token + 添加 x-model-provider: bedrock)`);
 
-serve(handler, { port: PROXY_PORT });
+serve(handler); //  <-- 核心修改在这里！去掉第二个参数
