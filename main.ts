@@ -1,6 +1,6 @@
 // Factory 用 x-api-key 转 bearer token，支持 Anthropic、OpenAI 和 Bedrock
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
-
+// v1.1
 // --- 配置 ---
 
 // 2. 定义代理服务器监听的端口
